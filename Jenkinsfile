@@ -8,7 +8,7 @@ pipeline {
         
         // 2. Secret Credentials ko securely inject karna
         // 'my-api-token' wahi exact ID hai jo aapne Step 1 mein Jenkins UI mein banayi thi
-        API_TOKEN = credentials('my-api-token')
+        API_TOKEN = credentials('my_token')
     }
 
     stages {
