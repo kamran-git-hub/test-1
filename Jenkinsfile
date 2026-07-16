@@ -1,36 +1,29 @@
 pipeline {
     agent any
     
+    // Yeh environment block hai jahan hum simple variables aur secrets inject kar rahe hain
+    environment {
+        // 1. Simple Environment Variable
+        APP_NAME = 'My_Super_App'
+        
+        // 2. Secret Credentials ko securely inject karna
+        // 'my-api-token' wahi exact ID hai jo aapne Step 1 mein Jenkins UI mein banayi thi
+        API_TOKEN = credentials('my-api-token')
+    }
+
     stages {
-        stage('Clone/Checkout') {
-            steps {
-                echo 'GitHub se code clone ho raha hai...'
-            }
-        }
         stage('Build') {
             steps {
-                echo 'Code build ho raha hai...'
-                sh 'echo "Yeh ek dummy Linux build command hai"'
+                // Simple variable ko use karne ka tareeqa
+                echo "Building application: ${APP_NAME}"
             }
         }
-        stage('Test') {
+        stage('Test Secret') {
             steps {
-                echo 'Code test ho raha hai...'
+                // Secret variable ko bash script (sh command) mein use karna
+                // Jenkins automatically console output mein isko hide (****) kar dega taake koi dekh na sake!
+                sh 'echo "My secure token is: $API_TOKEN"'
             }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Application server par deploy ho rahi hai...'
-            }
-        }
-    }
-    
-    post {
-        always {
-            echo 'Pipeline khatam ho gayi hai. Yeh always block hai jo hamesha chalega!'
-        }
-        success {
-            echo 'Wah! Build successful ho gaya.'
         }
     }
 }
