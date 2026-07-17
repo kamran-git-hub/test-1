@@ -1,23 +1,24 @@
 pipeline {
     agent any
     
-    // Tools block Jenkins ko batata hai ki 'Maven3' ko is pipeline mein available karo
     tools {
-        maven 'Maven-1' 
+        // Yeh wahi naam hona chahiye jo aapne 'Global Tool Configuration' mein rakha tha (maslan 'Maven3')
+        maven 'Maven3' 
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone Java Project') {
             steps {
-                echo 'Code clone ho raha hai...'
-                // Yahan aap git 'url' wali command use kar sakte hain
+                echo 'Public Java project GitHub se clone ho raha hai...'
+                // Yeh Jenkins ka official dummy Java project hai jisme pom.xml majood hai
+                git url: 'https://github.com/jenkins-docs/simple-java-maven-app.git', branch: 'master'
             }
         }
         stage('Build with Maven') {
             steps {
-                echo 'Maven ke zariye code build aur package ho raha hai...'
-                // 'mvn package' maven ki command hai jo code ko compile karke jar/war banati hai
-                sh 'mvn package' 
+                echo 'Maven dependencies download kar raha hai aur .jar file bana raha hai...'
+                // 'mvn clean package' command purani files delete kar ke naya build banati hai
+                sh 'mvn clean package' 
             }
         }
     }
