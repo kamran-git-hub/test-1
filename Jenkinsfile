@@ -3,7 +3,7 @@ pipeline {
     
     // Tools block Jenkins ko batata hai ki 'Maven3' ko is pipeline mein available karo
     tools {
-        maven 'Maven3' 
+        maven 'Maven-1' 
     }
 
     stages {
