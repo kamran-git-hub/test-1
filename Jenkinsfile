@@ -1,28 +1,23 @@
 pipeline {
     agent any
     
-    // Yeh environment block hai jahan hum simple variables aur secrets inject kar rahe hain
-    environment {
-        // 1. Simple Environment Variable
-        APP_NAME = 'My_Super_App'
-        
-        // 2. Secret Credentials ko securely inject karna
-        // 'my-api-token' wahi exact ID hai jo aapne Step 1 mein Jenkins UI mein banayi thi
-        API_TOKEN = credentials('my_token')
+    // Tools block Jenkins ko batata hai ki 'Maven3' ko is pipeline mein available karo
+    tools {
+        maven 'Maven3' 
     }
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                // Simple variable ko use karne ka tareeqa
-                echo "Building application: ${APP_NAME}"
+                echo 'Code clone ho raha hai...'
+                // Yahan aap git 'url' wali command use kar sakte hain
             }
         }
-        stage('Test Secret') {
+        stage('Build with Maven') {
             steps {
-                // Secret variable ko bash script (sh command) mein use karna
-                // Jenkins automatically console output mein isko hide (****) kar dega taake koi dekh na sake!
-                sh 'echo "My secure token is: $API_TOKEN"'
+                echo 'Maven ke zariye code build aur package ho raha hai...'
+                // 'mvn package' maven ki command hai jo code ko compile karke jar/war banati hai
+                sh 'mvn package' 
             }
         }
     }
