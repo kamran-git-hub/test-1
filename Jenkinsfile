@@ -3,7 +3,7 @@ pipeline {
     
     tools {
         // Sirf Maven rakhein, jdk hata dein
-        maven 'Maven3' 
+        maven 'Maven-1' 
     }
 
     stages {
