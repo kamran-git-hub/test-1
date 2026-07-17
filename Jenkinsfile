@@ -3,7 +3,7 @@ pipeline {
     
     tools {
         // Yeh wahi naam hona chahiye jo aapne 'Global Tool Configuration' mein rakha tha (maslan 'Maven3')
-        maven 'Maven3' 
+        maven 'Maven-1' 
     }
 
     stages {
