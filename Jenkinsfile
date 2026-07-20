@@ -1,10 +1,9 @@
 pipeline {
-    agent any
-    
-    tools {
-        maven 'Maven-1' 
+    // Yahan hum Jenkins ko bol rahe hain ke build ke liye 'maven' ka docker container use kare
+    agent { 
+        docker 'maven:3.8.4-openjdk-11' 
     }
-
+    
     stages {
         stage('Clone Java Project') {
             steps {
@@ -12,17 +11,11 @@ pipeline {
                 git url: 'https://github.com/jglick/simple-maven-project-with-tests.git', branch: 'master'
             }
         }
-        stage('Build with Maven') {
+        stage('Build inside Docker') {
             steps {
-                echo 'Code build ho raha hai...'
+                echo 'Docker container ke andar code build ho raha hai...'
+                // Yeh command ab aapke VM par nahi, balke Docker container ke andar chalegi!
                 sh 'mvn clean package -DskipTests' 
-            }
-        }
-        stage('Deploy with Ansible') {
-            steps {
-                echo 'Ansible Playbook ke zariye code deploy ho raha hai...'
-                // Yeh command Jenkins agent par Ansible chalayegi
-                sh 'ansible-playbook /tmp/deploy.yaml' 
             }
         }
     }
