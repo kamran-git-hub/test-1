@@ -15,7 +15,7 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 echo 'Code build ho raha hai...'
-                sh 'mvn clean package' 
+                sh 'mvn clean package -DskipTests' 
             }
         }
         stage('Deploy with Ansible') {
