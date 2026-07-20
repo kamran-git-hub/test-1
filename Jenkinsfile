@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Ansible Playbook ke zariye code deploy ho raha hai...'
                 // Yeh command Jenkins agent par Ansible chalayegi
-                sh 'ansible-playbook /tmp/deploy.yml' 
+                sh 'ansible-playbook /tmp/deploy.yaml' 
             }
         }
     }
